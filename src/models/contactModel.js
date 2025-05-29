@@ -26,11 +26,13 @@ const contactSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // ✅ добавляет createdAt и updatedAt
-    versionKey: false, // 🔇 отключает __v
+    timestamps: true, // добавляет createdAt и updatedAt
+    versionKey: false, // отключает __v
+    collection: 'contactsbase', // указываем имя коллекции явно
   }
 );
 
 export const Contact = mongoose.model('Contact', contactSchema);
+
 
 
