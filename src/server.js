@@ -15,19 +15,19 @@ export const setupServer = () => {
 
   const app = express();
 
-  // Middleware
+  
   app.use(cors());
   app.use(express.json());
 
-  // Простое логирование запросов
+  
   app.use(pinoHttp());
 
-  // Проверка маршрутов
+  
   console.log('🔁 Подключаю contactsRouter...');
   app.use('/contacts', contactsRouter);
   console.log('✅ contactsRouter подключён');
 
-  // Корневой маршрут
+  
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the contacts API' });
   });
