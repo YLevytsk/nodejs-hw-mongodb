@@ -14,7 +14,7 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', (reason) => {
   console.error('❌ [unhandledRejection] Необработанный промис:', reason);
 });
 

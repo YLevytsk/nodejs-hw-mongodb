@@ -1,23 +1,27 @@
-// src/db/initMongoConnection.js
 /* global process */
-
-// src/db/initMongoConnection.js
-
 import mongoose from 'mongoose';
 
 export const initMongoConnection = async () => {
-  const { MONGODB_URI } = process.env;
+  const {
+    MONGODB_USER,
+    MONGODB_PASSWORD,
+    MONGODB_URL,
+    MONGODB_DB
+  } = process.env;
 
-  console.log('⏺️ MONGODB_URI:', MONGODB_URI); // можно оставить для отладки
+  const uri = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?retryWrites=true&w=majority&appName=Cluster0`;
+
+  console.log('⏺️ Собранный MONGODB_URI:', uri);
 
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(uri);
     console.log('✅ Connected to MongoDB');
   } catch (error) {
     console.error('❌ Mongo connection error:', error.message);
     throw error;
   }
 };
+
 
 
 
