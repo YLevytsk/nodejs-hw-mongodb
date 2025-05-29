@@ -7,7 +7,7 @@ console.log('📄 Загружен index.js');
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { setupServer } from './server.js';
 
-// Ловим глобальные ошибки
+
 process.on('uncaughtException', (err) => {
   console.error('❌ [uncaughtException] Неперехваченная ошибка:', err.message);
   console.error(err.stack);

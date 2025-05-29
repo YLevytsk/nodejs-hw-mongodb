@@ -2,14 +2,14 @@ import express from 'express';
 import {
   fetchAllContacts,
   fetchContactById,
-  createContact,  // импортируем новую функцию
+  createContact, 
 } from '../controllers/contactsController.js';
 
 const router = express.Router();
 
 router.get('/', fetchAllContacts);
 router.get('/:contactId', fetchContactById);
-router.post('/', createContact);  // новый POST маршрут
+router.post('/', createContact);  
 
 export default router;
 

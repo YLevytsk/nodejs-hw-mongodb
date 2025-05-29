@@ -26,9 +26,9 @@ const contactSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // добавляет createdAt и updatedAt
-    versionKey: false, // отключает __v
-    collection: 'contactsbase', // указываем имя коллекции явно
+    timestamps: true, 
+    versionKey: false, 
+    collection: 'contactsbase', 
   }
 );
 

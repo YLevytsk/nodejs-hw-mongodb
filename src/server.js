@@ -32,12 +32,12 @@ export const setupServer = () => {
     res.json({ message: 'Welcome to the contacts API' });
   });
 
-  // Обработка несуществующих маршрутов
+  
   app.use('*', (req, res) => {
     res.status(404).json({ message: 'Not found' });
   });
 
-  // Запуск сервера
+ 
   app.listen(PORT, () => {
     console.log(`✅ Сервер запущен на порту ${PORT}`);
   });
