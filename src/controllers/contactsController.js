@@ -1,4 +1,4 @@
-import { getAllContacts, getContactById } from '../services/contacts.js';
+import { getAllContacts, getContactById, addContact } from '../services/contacts.js';
 
 export const fetchAllContacts = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ export const fetchAllContacts = async (req, res) => {
       data: contacts,
     });
   } catch (error) {
-    console.error('❌ Error fetching contacts:', error.message); // добавлен вывод
+    console.error('❌ Error fetching contacts:', error.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -29,7 +29,23 @@ export const fetchContactById = async (req, res) => {
       data: contact,
     });
   } catch (error) {
-    console.error('❌ Error fetching contact by ID:', error.message); // добавлен вывод
+    console.error('❌ Error fetching contact by ID:', error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const createContact = async (req, res) => {
+  try {
+    const newContactData = req.body;
+    const newContact = await addContact(newContactData);
+
+    res.status(201).json({
+      status: 201,
+      message: 'Contact created successfully!',
+      data: newContact,
+    });
+  } catch (error) {
+    console.error('❌ Error creating contact:', error.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
