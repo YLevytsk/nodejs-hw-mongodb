@@ -26,13 +26,14 @@ const contactSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, 
-    versionKey: false, 
-    collection: 'contactsbase', 
+    timestamps: true,
+    versionKey: false,
+    collection: 'mydb', // 👈 ключевая правка
   }
 );
 
 export const Contact = mongoose.model('Contact', contactSchema);
+
 
 
 
