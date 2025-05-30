@@ -29,7 +29,6 @@
     "pino-http": "^10.4.0"
   },
   "devDependencies": {
-    "eslint": "^9.27.0",
     "nodemon": "^3.1.10"
   }
 }
