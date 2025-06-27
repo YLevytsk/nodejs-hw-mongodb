@@ -13,5 +13,5 @@ export const validateBody = (schema) => {
     next();
   };
 };
-
+export default validateBody; 
 
