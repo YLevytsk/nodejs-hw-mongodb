@@ -1,7 +1,20 @@
 import Contact from '../models/contactModel.js';
 
-export const getAllContacts = async (userId) => {
-  return await Contact.find({ userId });
+export const getAllContacts = async ({
+  filter,
+  skip,
+  limit,
+  sortBy,
+  sortOrder,
+}) => {
+  const sortCriteria = { [sortBy]: sortOrder === 'desc' ? -1 : 1 };
+
+  const [contacts, totalItems] = await Promise.all([
+    Contact.find(filter).sort(sortCriteria).skip(skip).limit(limit),
+    Contact.countDocuments(filter),
+  ]);
+
+  return { contacts, totalItems };
 };
 
 export const getContactById = async (id, userId) => {
@@ -17,13 +30,13 @@ export const removeContact = async (id, userId) => {
   return await Contact.findOneAndDelete({ _id: id, userId });
 };
 
-export const updateContact = async (id, updateData, userId) => {
+export const updateContact = async (id, userId, updateData) => {
   return await Contact.findOneAndUpdate({ _id: id, userId }, updateData, {
     new: true,
   });
 };
 
-export const patchContact = async (id, updateData, userId) => {
+export const patchContact = async (id, userId, updateData) => {
   return await Contact.findOneAndUpdate({ _id: id, userId }, updateData, {
     new: true,
   });
