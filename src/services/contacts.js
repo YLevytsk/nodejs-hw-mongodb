@@ -1,11 +1,11 @@
 import Contact from '../models/contactModel.js';
 
 export const getAllContacts = async ({
-  filter,
-  skip,
-  limit,
-  sortBy,
-  sortOrder,
+  filter = {},
+  skip = 0,
+  limit = 10,
+  sortBy = 'name',
+  sortOrder = 'asc',
 }) => {
   const sortCriteria = { [sortBy]: sortOrder === 'desc' ? -1 : 1 };
 
@@ -41,6 +41,7 @@ export const patchContact = async (id, userId, updateData) => {
     new: true,
   });
 };
+
 
 
 
