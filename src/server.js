@@ -30,7 +30,8 @@ app.get('/', (req, res) => {
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-export default app; // ✅ обов'язково
+export default app;
+
 
 
 

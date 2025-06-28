@@ -6,29 +6,23 @@ import app from './server.js';
 
 const PORT = process.env.PORT || 300;
 
-process.on('uncaughtException', (err) => {
-  console.error('❌ [uncaughtException] Uncaught exception:', err.message);
-  console.error(err.stack);
+process.on('uncaughtException', () => {
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason) => {
-  console.error('❌ [unhandledRejection] Unhandled promise rejection:', reason);
+process.on('unhandledRejection', () => {
+  // nothing
 });
 
 const bootstrap = async () => {
   try {
     await initMongoConnection();
-
-    app.listen(PORT, () => {
-      console.log(`✅ Server is running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error('❌ Failed to launch application:', err.message);
-    console.error(err.stack);
+    app.listen(PORT);
+  } catch {
     process.exit(1);
   }
 };
 
 bootstrap();
+
 

@@ -41,9 +41,6 @@ const loginUser = async ({ email, password }) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
-  const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-
   const accessToken = jwt.sign({ userId: user._id }, JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
@@ -51,6 +48,9 @@ const loginUser = async ({ email, password }) => {
   const refreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
     expiresIn: "30d",
   });
+
+  const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
+  const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
   await Session.create({
     userId: user._id,
@@ -87,9 +87,6 @@ const refreshSession = async (oldRefreshToken) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
-  const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-
   const newAccessToken = jwt.sign({ userId: user._id }, JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
@@ -97,6 +94,9 @@ const refreshSession = async (oldRefreshToken) => {
   const newRefreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
     expiresIn: "30d",
   });
+
+  const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
+  const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
   await Session.create({
     userId: user._id,
@@ -108,7 +108,6 @@ const refreshSession = async (oldRefreshToken) => {
 
   return { accessToken: newAccessToken, refreshToken: newRefreshToken };
 };
-
 
 const logoutUser = async (refreshToken) => {
   if (!refreshToken) {
@@ -122,8 +121,9 @@ export default {
   registerUser,
   loginUser,
   refreshSession,
-  logoutUser, 
+  logoutUser,
 };
+
 
 
 

@@ -1,8 +1,8 @@
 export const validateBody = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body, {
-      abortEarly: false, 
-      convert: false     
+      abortEarly: false,
+      convert: false,
     });
 
     if (error) {
@@ -13,5 +13,7 @@ export const validateBody = (schema) => {
     next();
   };
 };
-export default validateBody; 
+
+export default validateBody;
+
 

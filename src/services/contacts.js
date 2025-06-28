@@ -18,29 +18,26 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (id, userId) => {
-  return await Contact.findOne({ _id: id, userId });
+  return Contact.findOne({ _id: id, userId });
 };
 
 export const addContact = async (contactData) => {
   const contact = new Contact(contactData);
-  return await contact.save();
+  return contact.save();
 };
 
 export const removeContact = async (id, userId) => {
-  return await Contact.findOneAndDelete({ _id: id, userId });
+  return Contact.findOneAndDelete({ _id: id, userId });
 };
 
 export const updateContact = async (id, userId, updateData) => {
-  return await Contact.findOneAndUpdate({ _id: id, userId }, updateData, {
-    new: true,
-  });
+  return Contact.findOneAndUpdate({ _id: id, userId }, updateData, { new: true });
 };
 
 export const patchContact = async (id, userId, updateData) => {
-  return await Contact.findOneAndUpdate({ _id: id, userId }, updateData, {
-    new: true,
-  });
+  return Contact.findOneAndUpdate({ _id: id, userId }, updateData, { new: true });
 };
+
 
 
 

@@ -8,13 +8,13 @@ const { JWT_ACCESS_SECRET = "" } = process.env;
 
 const authenticate = async (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization || "";
+    const authHeader = req.headers.authorization;
 
-    const [scheme, token] = authHeader.split(" ");
-
-    if (scheme !== "Bearer" || !token) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       throw createError(401, "No access token provided");
     }
+
+    const token = authHeader.split(" ")[1];
 
     let payload;
     try {
@@ -39,11 +39,11 @@ const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log("🔴 AUTH ERROR:", error.message); // 👈 лог в термінал
     next(error);
   }
 };
 
 export default authenticate;
+
 
 
