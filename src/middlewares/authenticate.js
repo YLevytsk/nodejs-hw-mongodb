@@ -6,12 +6,10 @@ import Session from "../models/sessionModel.js";
 
 const { JWT_ACCESS_SECRET = "" } = process.env;
 
-
 const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization || "";
 
-    
     const [scheme, token] = authHeader.split(" ");
 
     if (scheme !== "Bearer" || !token) {
@@ -22,32 +20,30 @@ const authenticate = async (req, res, next) => {
     try {
       payload = jwt.verify(token, JWT_ACCESS_SECRET);
     } catch (err) {
-      
       if (err.name === "TokenExpiredError") {
         throw createError(401, "Access token expired");
       }
       throw createError(401, "Invalid access token");
     }
 
-    
     const session = await Session.findOne({ accessToken: token });
     if (!session) {
       throw createError(401, "Session not found");
     }
 
-   
     const user = await User.findById(payload.userId).select("-password");
     if (!user) {
       throw createError(401, "User not found");
     }
 
-    
     req.user = user;
     next();
   } catch (error) {
+    console.log("🔴 AUTH ERROR:", error.message); // 👈 лог в термінал
     next(error);
   }
 };
 
 export default authenticate;
+
 
