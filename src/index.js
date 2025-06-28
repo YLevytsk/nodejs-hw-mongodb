@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { initMongoConnection } from './db/initMongoConnection.js';
-import { setupServer } from './server.js';
+import app from './server.js';
 
+const PORT = process.env.PORT || 3000;
 
 process.on('uncaughtException', (err) => {
   console.error('❌ [uncaughtException] Uncaught exception:', err.message);
@@ -11,16 +12,17 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-
 process.on('unhandledRejection', (reason) => {
   console.error('❌ [unhandledRejection] Unhandled promise rejection:', reason);
 });
 
-
 const bootstrap = async () => {
   try {
     await initMongoConnection();
-    setupServer();
+
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on port ${PORT}`);
+    });
   } catch (err) {
     console.error('❌ Failed to launch application:', err.message);
     console.error(err.stack);
@@ -29,3 +31,4 @@ const bootstrap = async () => {
 };
 
 bootstrap();
+
