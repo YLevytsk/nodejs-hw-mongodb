@@ -6,6 +6,12 @@ import loginSchema from "../validation/loginSchema.js";
 
 const router = express.Router();
 
+// ✅ debug-роут перед усім
+router.post('/debug', (req, res) => {
+  console.log("🪵 DEBUG BODY:", req.body);
+  res.json({ body: req.body });
+});
+
 router.post(
   "/register",
   validateBody(registerSchema),
