@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import User from "../models/userModel.js";
-
 import { sendResetPasswordEmail } from "../services/emailService.js";
 
 export const sendResetEmail = async (req, res) => {
@@ -17,6 +16,9 @@ export const sendResetEmail = async (req, res) => {
   });
 
   const resetLink = `${process.env.APP_DOMAIN}/reset-password?token=${token}`;
+
+  // 👇 Додай це!
+  console.log("🔗 Reset password link:", resetLink);
 
   try {
     await sendResetPasswordEmail(email, resetLink);
