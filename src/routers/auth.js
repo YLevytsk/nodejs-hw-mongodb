@@ -30,7 +30,7 @@ router.post(
   sendResetEmail
 );
 
-// ✅ Додано роут для скиду пароля
+
 router.post(
   "/reset-pwd",
   validateBody(resetPwdSchema),

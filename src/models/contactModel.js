@@ -34,7 +34,7 @@ const contactSchema = new mongoose.Schema(
       required: true,
     },
 
-    // ✅ нове поле для збереження посилання на фото з Cloudinary
+   
     photo: {
       type: String,
       default: null,

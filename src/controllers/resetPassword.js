@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import User from "../models/userModel.js";
-import Session from "../models/sessionModel.js"; // якщо у тебе є модель сесії
+import Session from "../models/sessionModel.js"; 
 import bcrypt from "bcryptjs";
 
 export const resetPassword = async (req, res) => {
@@ -23,7 +23,7 @@ export const resetPassword = async (req, res) => {
   user.password = hashedPassword;
   await user.save();
 
-  // ❗ Видаляємо сесію, якщо використовуються refresh-токени
+ 
   await Session.deleteMany({ user: user._id });
 
   res.status(200).json({
