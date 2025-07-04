@@ -1,4 +1,5 @@
 import createError from 'http-errors';
+import { v2 as cloudinary } from 'cloudinary';
 import {
   getAllContacts,
   getContactById,
@@ -84,12 +85,23 @@ export async function createContactController(req, res) {
     );
   }
 
+  let photoUrl = null;
+
+  if (req.file) {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'contacts',
+    });
+
+    photoUrl = result.secure_url;
+  }
+
   const newContact = await addContact({
     name,
     phoneNumber,
     contactType,
     email,
     isFavourite,
+    photo: photoUrl,
     userId: req.user._id,
   });
 
@@ -129,7 +141,14 @@ export async function updateContactController(req, res) {
 
 export async function patchContactController(req, res) {
   const { contactId } = req.params;
-  const updateData = req.body;
+  const updateData = { ...req.body };
+
+  if (req.file) {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'contacts',
+    });
+    updateData.photo = result.secure_url;
+  }
 
   if (!updateData || Object.keys(updateData).length === 0) {
     throw createError(400, 'No data provided for update');
