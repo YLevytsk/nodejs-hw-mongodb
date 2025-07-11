@@ -6,7 +6,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: |
-    This API provides CRUD operations for managing contacts and supports user registration and login. 
+    This API provides CRUD operations for managing contacts and supports user registration and login.
     Users can create, view, update, and delete their contacts after authentication. The API uses JWT for authentication.
 
 tags:
@@ -16,7 +16,7 @@ tags:
     description: User registration and authentication
 
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:300
     description: Local development server
   - url: https://nodejs-hw-mongodb-4t6o.onrender.com
     description: Production server
@@ -34,10 +34,10 @@ paths:
       $ref: ../swagger/paths/contacts/{id}/patch.yaml#/patch
     delete:
       $ref: ../swagger/paths/contacts/{id}/delete.yaml#/delete
-  /users/register:
+  /auth/register:
     post:
       $ref: ../swagger/paths/users/register.yaml#/post
-  /users/login:
+  /auth/login:
     post:
       $ref: ../swagger/paths/users/login.yaml#/post
 
@@ -47,6 +47,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
 
 
 
