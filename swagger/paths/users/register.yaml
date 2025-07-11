@@ -16,7 +16,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../../components/schemas.yaml#/User
+          $ref: ../../components/schemas.yaml#/User
     '400':
       description: Invalid input
 

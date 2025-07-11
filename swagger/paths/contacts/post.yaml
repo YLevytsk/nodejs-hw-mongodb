@@ -18,7 +18,7 @@ post:
       content:
         application/json:
           schema:
-             $ref: ../../components/schemas.yaml#/Contact
+          $ref: ../../components/schemas.yaml#/Contact
     '400':
       description: Invalid input
 

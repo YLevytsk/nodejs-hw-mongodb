@@ -41,6 +41,6 @@ get:
           schema:
             type: array
             items:
-             $ref: ../../components/schemas.yaml#/Contact
+            $ref: ../../components/schemas.yaml#/Contact
 
 
