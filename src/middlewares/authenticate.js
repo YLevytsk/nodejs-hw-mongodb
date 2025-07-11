@@ -4,10 +4,13 @@ import createError from "http-errors";
 import User from "../models/userModel.js";
 import Session from "../models/sessionModel.js";
 
-const { JWT_ACCESS_SECRET = "" } = process.env;
-
 const authenticate = async (req, res, next) => {
   try {
+    const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
+    if (!JWT_ACCESS_SECRET) {
+      throw new Error("JWT_ACCESS_SECRET is not defined in environment variables");
+    }
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -44,5 +47,7 @@ const authenticate = async (req, res, next) => {
 };
 
 export default authenticate;
+
+
 
 
