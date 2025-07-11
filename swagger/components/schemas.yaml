@@ -36,3 +36,30 @@ ContactInput:
     - email
     - phone
 
+User:
+  type: object
+  properties:
+    _id:
+      type: string
+      example: "64cde2b1a3bbd14d9b2c5ad2"
+    email:
+      type: string
+      example: "jane@mail.com"
+  required:
+    - _id
+    - email
+
+UserInput:
+  type: object
+  properties:
+    email:
+      type: string
+      example: "jane@mail.com"
+    password:
+      type: string
+      example: "secretPassword"
+  required:
+    - email
+    - password
+
+
