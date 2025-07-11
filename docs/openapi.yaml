@@ -1,16 +1,26 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: <назва вашого додатку>
+  title: hw7-swagger
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: <опис вашого додатку>
+  description: |
+    This API provides CRUD operations for managing contacts and supports user registration and login. 
+    Users can create, view, update, and delete their contacts after authentication. The API uses JWT for authentication.
+
 tags:
-  # теги, що ви будете використовувати
+  - name: Contacts
+    description: Operations related to contacts management
+  - name: Auth
+    description: User registration and authentication
+
 servers:
   - url: http://localhost:3000
-  - url: #посилання на задеплоєний сайт
+    description: Local development server
+  - url: https://nodejs-hw-mongodb-4t6o.onrender.com
+    description: Production server
+
 paths:
   /contacts:
     get:
@@ -37,6 +47,3 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
-
-
