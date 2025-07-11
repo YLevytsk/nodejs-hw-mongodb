@@ -18,14 +18,16 @@ patch:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas.yaml#/ContactInput'
+          $ref: '../../../components/schemas.yaml#/ContactInput'
+
   responses:
     '200':
       description: Contact updated successfully
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas.yaml#/Contact'
+            $ref: '../../../components/schemas.yaml#/Contact'
+
     '400':
       description: Invalid input
     '404':
