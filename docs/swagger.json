@@ -99,9 +99,7 @@
           "201": {
             "description": "Contact created successfully",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Contact" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
             }
           },
           "400": { "description": "Invalid input" }
@@ -128,17 +126,13 @@
           "200": {
             "description": "Contact found successfully",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Contact" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
             }
           },
           "404": {
             "description": "Contact not found",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/NotFound" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotFound" } }
             }
           }
         }
@@ -170,9 +164,7 @@
           "200": {
             "description": "Contact updated successfully",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Contact" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
             }
           },
           "400": { "description": "Invalid input" },
@@ -205,7 +197,7 @@
         "tags": ["Auth"],
         "summary": "Register new user",
         "operationId": "registerUser",
-        "description": "Register a new user with email and password.",
+        "description": "Register a new user with name, email and password.",
         "requestBody": {
           "required": true,
           "content": {
@@ -299,10 +291,11 @@
       "UserInput": {
         "type": "object",
         "properties": {
+          "name": { "type": "string", "example": "Jane Doe" },
           "email": { "type": "string", "example": "jane@mail.com" },
           "password": { "type": "string", "example": "secretPassword" }
         },
-        "required": ["email", "password"]
+        "required": ["name", "email", "password"]
       },
       "User": {
         "type": "object",
@@ -315,3 +308,4 @@
     }
   }
 }
+
