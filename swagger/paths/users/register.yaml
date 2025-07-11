@@ -9,14 +9,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas.yaml#/UserInput'
+          $ref: 'swagger/components/schemas.yaml#/UserInput'
   responses:
     '201':
       description: User registered successfully
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas.yaml#/User'
+            $ref: 'swagger/components/schemas.yaml#/User'
     '400':
       description: Invalid input
+
 

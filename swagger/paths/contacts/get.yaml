@@ -41,5 +41,6 @@ get:
           schema:
             type: array
             items:
-              $ref: '../../components/schemas.yaml#/Contact'
+              $ref: 'swagger/components/schemas.yaml#/Contact'
+
 

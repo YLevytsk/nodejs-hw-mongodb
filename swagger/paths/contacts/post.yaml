@@ -11,14 +11,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas.yaml#/ContactInput'
+          $ref: 'swagger/components/schemas.yaml#/ContactInput'
   responses:
     '201':
       description: Contact created successfully
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas.yaml#/Contact'
+            $ref: 'swagger/components/schemas.yaml#/Contact'
     '400':
       description: Invalid input
+
 

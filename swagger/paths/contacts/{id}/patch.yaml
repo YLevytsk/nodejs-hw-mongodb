@@ -18,7 +18,7 @@ patch:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/ContactInput'
+          $ref: 'swagger/components/schemas.yaml#/ContactInput'
 
   responses:
     '200':
@@ -26,10 +26,11 @@ patch:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas.yaml#/Contact'
+            $ref: 'swagger/components/schemas.yaml#/Contact'
 
     '400':
       description: Invalid input
     '404':
       description: Contact not found
+
 
