@@ -16,7 +16,7 @@ tags:
     description: User registration and authentication
 
 servers:
-  - url: http://localhost:300
+  - url: http://localhost:3000
     description: Local development server
   - url: https://nodejs-hw-mongodb-4t6o.onrender.com
     description: Production server
@@ -47,5 +47,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
 
 

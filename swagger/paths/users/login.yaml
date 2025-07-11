@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-        $ref: ../../components/schemas.yaml#/UserInput
+          $ref: ../../components/schemas.yaml#/UserInput
   responses:
     '200':
       description: User logged in successfully
@@ -21,7 +21,7 @@ post:
               token:
                 type: string
               user:
-              $ref: ../../components/schemas.yaml#/User
+                $ref: ../../components/schemas.yaml#/User
     '400':
       description: Invalid email or password
 
