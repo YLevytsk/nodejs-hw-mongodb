@@ -1,0 +1,45 @@
+get:
+  tags:
+    - Contacts
+  summary: Get all contacts
+  operationId: getContacts
+  description: Returns a list of all contacts. Supports pagination and filtering by name/email.
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      required: false
+      description: Page number
+      schema:
+        type: integer
+        default: 1
+    - name: limit
+      in: query
+      required: false
+      description: Number of contacts per page
+      schema:
+        type: integer
+        default: 20
+    - name: name
+      in: query
+      required: false
+      description: Filter contacts by name
+      schema:
+        type: string
+    - name: email
+      in: query
+      required: false
+      description: Filter contacts by email
+      schema:
+        type: string
+  responses:
+    '200':
+      description: List of contacts
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../components/schemas.yaml#/Contact'
+

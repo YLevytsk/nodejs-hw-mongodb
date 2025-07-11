@@ -1,0 +1,22 @@
+post:
+  tags:
+    - Auth
+  summary: Register new user
+  operationId: registerUser
+  description: Register a new user with email and password.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas.yaml#/UserInput'
+  responses:
+    '201':
+      description: User registered successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas.yaml#/User'
+    '400':
+      description: Invalid input
+

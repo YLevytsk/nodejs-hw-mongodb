@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: <назва вашого додатку>
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: <опис вашого додатку>
+tags:
+  # теги, що ви будете використовувати
+servers:
+  - url: http://localhost:3000
+  - url: #посилання на задеплоєний сайт
+paths:
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml#/get
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml#/post
+  /contacts/{contactId}:
+    get:
+      $ref: ../swagger/paths/contacts/{id}/get.yaml#/get
+    patch:
+      $ref: ../swagger/paths/contacts/{id}/patch.yaml#/patch
+    delete:
+      $ref: ../swagger/paths/contacts/{id}/delete.yaml#/delete
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/register.yaml#/post
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/login.yaml#/post
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+

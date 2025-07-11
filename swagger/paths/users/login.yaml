@@ -1,0 +1,27 @@
+post:
+  tags:
+    - Auth
+  summary: User login
+  operationId: loginUser
+  description: Login user with email and password.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas.yaml#/UserInput'
+  responses:
+    '200':
+      description: User logged in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+              user:
+                $ref: '../../../components/schemas.yaml#/User'
+    '400':
+      description: Invalid email or password
+
