@@ -32,55 +32,39 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get all contacts",
         "operationId": "getContacts",
         "description": "Returns a list of all contacts. Supports pagination and filtering by name/email.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "page",
             "in": "query",
             "required": false,
             "description": "Page number",
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
+            "schema": { "type": "integer", "default": 1 }
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "description": "Number of contacts per page",
-            "schema": {
-              "type": "integer",
-              "default": 20
-            }
+            "schema": { "type": "integer", "default": 20 }
           },
           {
             "name": "name",
             "in": "query",
             "required": false,
             "description": "Filter contacts by name",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           },
           {
             "name": "email",
             "in": "query",
             "required": false,
             "description": "Filter contacts by email",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -90,9 +74,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Contact"
-                  }
+                  "items": { "$ref": "#/components/schemas/Contact" }
                 }
               }
             }
@@ -100,24 +82,16 @@
         }
       },
       "post": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Create a new contact",
         "operationId": "createContact",
         "description": "Creates a new contact",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInput"
-              }
+              "schema": { "$ref": "#/components/schemas/ContactInput" }
             }
           }
         },
@@ -126,40 +100,28 @@
             "description": "Contact created successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Contact"
-                }
+                "schema": { "$ref": "#/components/schemas/Contact" }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          }
+          "400": { "description": "Invalid input" }
         }
       }
     },
     "/contacts/{contactId}": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get contact by ID",
         "operationId": "getContactById",
         "description": "Returns a contact by its unique ID.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "contactId",
             "in": "path",
             "required": true,
             "description": "Unique ID of the contact",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -167,9 +129,7 @@
             "description": "Contact found successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Contact"
-                }
+                "schema": { "$ref": "#/components/schemas/Contact" }
               }
             }
           },
@@ -177,44 +137,32 @@
             "description": "Contact not found",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFound"
-                }
+                "schema": { "$ref": "#/components/schemas/NotFound" }
               }
             }
           }
         }
       },
       "patch": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update a contact by ID",
         "operationId": "updateContactById",
         "description": "Updates the contact by its unique ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "contactId",
             "in": "path",
             "required": true,
             "description": "Unique ID of the contact",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInput"
-              }
+              "schema": { "$ref": "#/components/schemas/ContactInput" }
             }
           }
         },
@@ -223,58 +171,38 @@
             "description": "Contact updated successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Contact"
-                }
+                "schema": { "$ref": "#/components/schemas/Contact" }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "404": {
-            "description": "Contact not found"
-          }
+          "400": { "description": "Invalid input" },
+          "404": { "description": "Contact not found" }
         }
       },
       "delete": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Delete a contact by ID",
         "operationId": "deleteContactById",
         "description": "Deletes the contact by its unique ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "contactId",
             "in": "path",
             "required": true,
             "description": "Unique ID of the contact",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Contact deleted successfully"
-          },
-          "404": {
-            "description": "Contact not found"
-          }
+          "200": { "description": "Contact deleted successfully" },
+          "404": { "description": "Contact not found" }
         }
       }
     },
-    "/users/register": {
+    "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register new user",
         "operationId": "registerUser",
         "description": "Register a new user with email and password.",
@@ -282,9 +210,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserInput"
-              }
+              "schema": { "$ref": "#/components/schemas/UserInput" }
             }
           }
         },
@@ -293,23 +219,17 @@
             "description": "User registered successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
+                "schema": { "$ref": "#/components/schemas/User" }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          }
+          "400": { "description": "Invalid input" }
         }
       }
     },
-    "/users/login": {
+    "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User login",
         "operationId": "loginUser",
         "description": "Login user with email and password.",
@@ -317,9 +237,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserInput"
-              }
+              "schema": { "$ref": "#/components/schemas/UserInput" }
             }
           }
         },
@@ -331,20 +249,14 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "user": {
-                      "$ref": "#/components/schemas/User"
-                    }
+                    "token": { "type": "string" },
+                    "user": { "$ref": "#/components/schemas/User" }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid email or password"
-          }
+          "400": { "description": "Invalid email or password" }
         }
       }
     }
@@ -361,98 +273,44 @@
       "Contact": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "example": "64cde2b1a3bbd14d9b2c5ad2"
-          },
-          "name": {
-            "type": "string",
-            "example": "Jane Doe"
-          },
-          "email": {
-            "type": "string",
-            "example": "jane@mail.com"
-          },
-          "phone": {
-            "type": "string",
-            "example": "+380991234567"
-          }
+          "_id": { "type": "string", "example": "64cde2b1a3bbd14d9b2c5ad2" },
+          "name": { "type": "string", "example": "Jane Doe" },
+          "email": { "type": "string", "example": "jane@mail.com" },
+          "phone": { "type": "string", "example": "+380991234567" }
         },
-        "required": [
-          "_id",
-          "name",
-          "email",
-          "phone"
-        ]
+        "required": ["_id", "name", "email", "phone"]
       },
       "ContactInput": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "example": "Jane Doe"
-          },
-          "email": {
-            "type": "string",
-            "example": "jane@mail.com"
-          },
-          "phone": {
-            "type": "string",
-            "example": "+380991234567"
-          }
+          "name": { "type": "string", "example": "Jane Doe" },
+          "email": { "type": "string", "example": "jane@mail.com" },
+          "phone": { "type": "string", "example": "+380991234567" }
         },
-        "required": [
-          "name",
-          "email",
-          "phone"
-        ]
+        "required": ["name", "email", "phone"]
       },
       "NotFound": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "example": "error"
-          },
-          "message": {
-            "type": "string",
-            "example": "Contact not found"
-          }
+          "status": { "type": "string", "example": "error" },
+          "message": { "type": "string", "example": "Contact not found" }
         }
       },
       "UserInput": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "example": "jane@mail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "secretPassword"
-          }
+          "email": { "type": "string", "example": "jane@mail.com" },
+          "password": { "type": "string", "example": "secretPassword" }
         },
-        "required": [
-          "email",
-          "password"
-        ]
+        "required": ["email", "password"]
       },
       "User": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "example": "64cde2b1a3bbd14d9b2c5ad2"
-          },
-          "email": {
-            "type": "string",
-            "example": "jane@mail.com"
-          }
+          "_id": { "type": "string", "example": "64cde2b1a3bbd14d9b2c5ad2" },
+          "email": { "type": "string", "example": "jane@mail.com" }
         },
-        "required": [
-          "_id",
-          "email"
-        ]
+        "required": ["_id", "email"]
       }
     }
   }
