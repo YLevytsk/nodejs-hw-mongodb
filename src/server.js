@@ -15,6 +15,15 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// Глобальные обработчики ошибок
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+});
+
 // Читаємо swagger.json
 const swaggerJsonPath = path.join(__dirname, '../docs/swagger.json');
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggerJsonPath, 'utf-8'));
@@ -54,6 +63,7 @@ const PORT = process.env.PORT || 300;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 export default app;
 
 
