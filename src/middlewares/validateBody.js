@@ -2,7 +2,7 @@ export const validateBody = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body, {
       abortEarly: false,
-      convert: true, // Оце головне
+      convert: true, 
     });
 
     if (error) {

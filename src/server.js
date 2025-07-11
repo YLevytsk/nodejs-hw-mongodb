@@ -19,19 +19,18 @@ const app = express();
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
-
 process.on('unhandledRejection', (err) => {
   console.error('Unhandled Rejection:', err);
 });
 
-// Читаємо swagger.json
+// Читаем swagger.json
 const swaggerJsonPath = path.join(__dirname, '../docs/swagger.json');
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggerJsonPath, 'utf-8'));
 
-// Роздаємо docs як статичну папку (опційно, щоб мати доступ до swagger.json через URL)
+// Раздаем docs как статичную папку (опционально, чтобы получить доступ к swagger.json по URL)
 app.use('/docs', express.static(path.join(__dirname, '../docs')));
 
-// Підключаємо Swagger UI
+// Подключаем Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware
@@ -40,7 +39,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(pinoHttp());
 
-// Тут твої роутери, наприклад:
+// Роуты
 import contactsRouter from './routers/contactsRouter.js';
 import authRouter from './routers/auth.js';
 import authenticate from './middlewares/authenticate.js';
@@ -52,17 +51,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the contacts API' });
 });
 
-// Обробники помилок
+// Обработчики ошибок
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 app.use(notFoundHandler);
 app.use(errorHandler);
-
-const PORT = process.env.PORT || 300;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 export default app;
 
