@@ -202,7 +202,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserInput" }
+              "schema": { "$ref": "#/components/schemas/UserInputWithName" }
             }
           }
         },
@@ -289,6 +289,14 @@
         }
       },
       "UserInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "example": "jane@mail.com" },
+          "password": { "type": "string", "example": "secretPassword" }
+        },
+        "required": ["email", "password"]
+      },
+      "UserInputWithName": {
         "type": "object",
         "properties": {
           "name": { "type": "string", "example": "Jane Doe" },
