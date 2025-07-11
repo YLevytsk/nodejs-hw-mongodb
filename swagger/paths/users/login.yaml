@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/UserInput'
+          $ref: '../../components/schemas.yaml#/UserInput'
   responses:
     '200':
       description: User logged in successfully
