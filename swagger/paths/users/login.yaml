@@ -21,7 +21,7 @@ post:
               token:
                 type: string
               user:
-                $ref: '../../../components/schemas.yaml#/User'
+                $ref: '../../components/schemas.yaml#/User'
     '400':
       description: Invalid email or password
 
