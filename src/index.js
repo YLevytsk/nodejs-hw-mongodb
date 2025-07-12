@@ -2,13 +2,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-// Определяем текущую директорию для правильного поиска .env
+// Делаем dotenv первым делом!
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Явно указываем путь к .env в корне проекта!
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+// Дальше — только остальные импорты
 import { initMongoConnection } from './db/initMongoConnection.js';
 import app from './server.js';
 
@@ -32,5 +32,6 @@ const bootstrap = async () => {
 };
 
 bootstrap();
+
 
 
