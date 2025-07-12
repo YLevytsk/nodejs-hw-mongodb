@@ -5,12 +5,7 @@ import createError from "http-errors";
 import User from "../models/userModel.js";
 import Session from "../models/sessionModel.js";
 
-const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
-
-// ДОБАВЛЕНО: Проверяем, читаются ли переменные окружения
-console.log('JWT_ACCESS_SECRET:', JWT_ACCESS_SECRET);
-console.log('JWT_REFRESH_SECRET:', JWT_REFRESH_SECRET);
+// НЕ создаём глобальные константы из process.env!!!
 
 const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
@@ -45,15 +40,15 @@ const loginUser = async ({ email, password }) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  // Перед созданием токена выведи ещё раз для уверенности
-  console.log('LOGIN: JWT_ACCESS_SECRET:', JWT_ACCESS_SECRET);
-  console.log('LOGIN: JWT_REFRESH_SECRET:', JWT_REFRESH_SECRET);
+  // Проверяем переменные окружения перед использованием!
+  console.log('LOGIN: JWT_ACCESS_SECRET:', process.env.JWT_ACCESS_SECRET);
+  console.log('LOGIN: JWT_REFRESH_SECRET:', process.env.JWT_REFRESH_SECRET);
 
-  const accessToken = jwt.sign({ userId: user._id }, JWT_ACCESS_SECRET, {
+  const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
 
-  const refreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
+  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
     expiresIn: "30d",
   });
 
@@ -78,7 +73,7 @@ const refreshSession = async (oldRefreshToken) => {
 
   let payload;
   try {
-    payload = jwt.verify(oldRefreshToken, JWT_REFRESH_SECRET);
+    payload = jwt.verify(oldRefreshToken, process.env.JWT_REFRESH_SECRET);
   } catch {
     throw createError(401, "Invalid refresh token");
   }
@@ -95,11 +90,11 @@ const refreshSession = async (oldRefreshToken) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  const newAccessToken = jwt.sign({ userId: user._id }, JWT_ACCESS_SECRET, {
+  const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
 
-  const newRefreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
+  const newRefreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
     expiresIn: "30d",
   });
 
@@ -131,6 +126,7 @@ export default {
   refreshSession,
   logoutUser,
 };
+
 
 
 
