@@ -1,5 +1,13 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-dotenv.config();
+
+// Определяем текущую директорию для правильного поиска .env
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Явно указываем путь к .env в корне проекта!
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import { initMongoConnection } from './db/initMongoConnection.js';
 import app from './server.js';

@@ -8,6 +8,10 @@ import Session from "../models/sessionModel.js";
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 
+// ДОБАВЛЕНО: Проверяем, читаются ли переменные окружения
+console.log('JWT_ACCESS_SECRET:', JWT_ACCESS_SECRET);
+console.log('JWT_REFRESH_SECRET:', JWT_REFRESH_SECRET);
+
 const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -40,6 +44,10 @@ const loginUser = async ({ email, password }) => {
   }
 
   await Session.deleteMany({ userId: user._id });
+
+  // Перед созданием токена выведи ещё раз для уверенности
+  console.log('LOGIN: JWT_ACCESS_SECRET:', JWT_ACCESS_SECRET);
+  console.log('LOGIN: JWT_REFRESH_SECRET:', JWT_REFRESH_SECRET);
 
   const accessToken = jwt.sign({ userId: user._id }, JWT_ACCESS_SECRET, {
     expiresIn: "15m",
