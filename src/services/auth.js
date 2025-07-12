@@ -5,8 +5,6 @@ import createError from "http-errors";
 import User from "../models/userModel.js";
 import Session from "../models/sessionModel.js";
 
-// НЕ создаём глобальные константы из process.env!!!
-
 const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -40,17 +38,17 @@ const loginUser = async ({ email, password }) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  // Проверяем переменные окружения перед использованием!
-  console.log('LOGIN: JWT_ACCESS_SECRET:', process.env.JWT_ACCESS_SECRET);
-  console.log('LOGIN: JWT_REFRESH_SECRET:', process.env.JWT_REFRESH_SECRET);
+  const accessToken = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_ACCESS_SECRET,
+    { expiresIn: "15m" }
+  );
 
-  const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15m",
-  });
-
-  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: "30d",
-  });
+  const refreshToken = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: "30d" }
+  );
 
   const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
   const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
@@ -90,13 +88,17 @@ const refreshSession = async (oldRefreshToken) => {
 
   await Session.deleteMany({ userId: user._id });
 
-  const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15m",
-  });
+  const newAccessToken = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_ACCESS_SECRET,
+    { expiresIn: "15m" }
+  );
 
-  const newRefreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: "30d",
-  });
+  const newRefreshToken = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: "30d" }
+  );
 
   const accessTokenValidUntil = new Date(Date.now() + 15 * 60 * 1000);
   const refreshTokenValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
