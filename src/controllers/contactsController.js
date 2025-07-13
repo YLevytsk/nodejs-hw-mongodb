@@ -46,17 +46,17 @@ export async function getAllContactsController(req, res) {
   const hasNextPage = pageNumber < totalPages;
 
   res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
+    status: "success",
+    code: 200,
     data: {
-      data: contacts,
+      contacts: contacts,
+      total: totalItems,
       page: pageNumber,
-      perPage: limit,
-      totalItems,
+      limit: limit,
       totalPages,
       hasPreviousPage,
       hasNextPage,
-    },
+    }
   });
 }
 
@@ -69,8 +69,8 @@ export async function getContactByIdController(req, res) {
   }
 
   res.status(200).json({
-    status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
+    status: "success",
+    code: 200,
     data: contact,
   });
 }
@@ -106,8 +106,8 @@ export async function createContactController(req, res) {
   });
 
   res.status(201).json({
-    status: 201,
-    message: 'Successfully created a contact!',
+    status: "success",
+    code: 201,
     data: newContact,
   });
 }
@@ -133,8 +133,8 @@ export async function updateContactController(req, res) {
   }
 
   res.status(200).json({
-    status: 200,
-    message: `Contact with id ${contactId} updated successfully!`,
+    status: "success",
+    code: 200,
     data: updatedContact,
   });
 }
@@ -161,11 +161,12 @@ export async function patchContactController(req, res) {
   }
 
   res.status(200).json({
-    status: 200,
-    message: 'Successfully patched a contact!',
+    status: "success",
+    code: 200,
     data: updatedContact,
   });
 }
+
 
 
 

@@ -35,7 +35,7 @@
         "tags": ["Contacts"],
         "summary": "Get all contacts",
         "operationId": "getContacts",
-        "description": "Returns a list of all contacts. Supports pagination and filtering by name/email.",
+        "description": "Returns a list of all contacts. Supports pagination, sorting, and filtering.",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -46,35 +46,81 @@
             "schema": { "type": "integer", "default": 1 }
           },
           {
-            "name": "limit",
+            "name": "perPage",
             "in": "query",
             "required": false,
             "description": "Number of contacts per page",
-            "schema": { "type": "integer", "default": 20 }
+            "schema": { "type": "integer", "default": 10 }
           },
           {
-            "name": "name",
+            "name": "sortBy",
             "in": "query",
             "required": false,
-            "description": "Filter contacts by name",
+            "description": "Sort field",
+            "schema": { "type": "string", "default": "name" }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (asc or desc)",
+            "schema": { "type": "string", "default": "asc", "enum": ["asc", "desc"] }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by contactType",
             "schema": { "type": "string" }
           },
           {
-            "name": "email",
+            "name": "isFavourite",
             "in": "query",
             "required": false,
-            "description": "Filter contacts by email",
-            "schema": { "type": "string" }
+            "description": "Filter by favourite contacts (true/false)",
+            "schema": { "type": "boolean" }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of contacts",
+            "description": "List of contacts with pagination",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Contact" }
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Successfully found contacts!" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": { "$ref": "#/components/schemas/Contact" }
+                        },
+                        "page": { "type": "integer", "example": 1 },
+                        "perPage": { "type": "integer", "example": 10 },
+                        "totalItems": { "type": "integer", "example": 17 },
+                        "totalPages": { "type": "integer", "example": 2 },
+                        "hasPreviousPage": { "type": "boolean", "example": false },
+                        "hasNextPage": { "type": "boolean", "example": true }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Not authorized" }
+                  }
                 }
               }
             }
@@ -99,10 +145,32 @@
           "201": {
             "description": "Contact created successfully",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Successfully created a contact!" },
+                    "data": { "$ref": "#/components/schemas/Contact" }
+                  }
+                }
+              }
             }
           },
-          "400": { "description": "Invalid input" }
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Missing required fields: name, phoneNumber, contactType" }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -126,13 +194,30 @@
           "200": {
             "description": "Contact found successfully",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Successfully found contact with id 68725a5e1785c8943512c751!" },
+                    "data": { "$ref": "#/components/schemas/Contact" }
+                  }
+                }
+              }
             }
           },
           "404": {
             "description": "Contact not found",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/NotFound" } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Contact not found" }
+                  }
+                }
+              }
             }
           }
         }
@@ -164,11 +249,46 @@
           "200": {
             "description": "Contact updated successfully",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Contact with id 68725a5e1785c8943512c751 updated successfully!" },
+                    "data": { "$ref": "#/components/schemas/Contact" }
+                  }
+                }
+              }
             }
           },
-          "400": { "description": "Invalid input" },
-          "404": { "description": "Contact not found" }
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "No data provided for update" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Contact not found" }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -187,8 +307,23 @@
           }
         ],
         "responses": {
-          "200": { "description": "Contact deleted successfully" },
-          "404": { "description": "Contact not found" }
+          "204": {
+            "description": "Contact deleted successfully"
+          },
+          "404": {
+            "description": "Contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Contact not found" }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -211,11 +346,41 @@
             "description": "User registered successfully",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Successfully registered a user!" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string", "example": "Anna2 Test" },
+                        "email": { "type": "string", "example": "anna2.test@example.com" },
+                        "_id": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
+                        "createdAt": { "type": "string", "example": "2025-07-13T13:03:56.324Z" },
+                        "updatedAt": { "type": "string", "example": "2025-07-13T13:03:56.324Z" },
+                        "__v": { "type": "integer", "example": 0 }
+                      }
+                    }
+                  }
+                }
               }
             }
           },
-          "400": { "description": "Invalid input" }
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Missing required fields" }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -241,14 +406,35 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": { "type": "string" },
-                    "user": { "$ref": "#/components/schemas/User" }
+                    "status": { "type": "string", "example": "success" },
+                    "message": { "type": "string", "example": "Successfully logged in!" },
+                    "token": { "type": "string", "example": "jwt-token" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
+                        "email": { "type": "string", "example": "anna2.test@example.com" }
+                      }
+                    }
                   }
                 }
               }
             }
           },
-          "400": { "description": "Invalid email or password" }
+          "400": {
+            "description": "Invalid email or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "message": { "type": "string", "example": "Invalid email or password" }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
