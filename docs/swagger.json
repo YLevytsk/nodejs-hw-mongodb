@@ -407,13 +407,11 @@
                   "type": "object",
                   "properties": {
                     "status": { "type": "string", "example": "success" },
-                    "message": { "type": "string", "example": "Successfully logged in!" },
-                    "token": { "type": "string", "example": "jwt-token" },
+                    "message": { "type": "string", "example": "Successfully logged in an user!" },
                     "data": {
                       "type": "object",
                       "properties": {
-                        "_id": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
-                        "email": { "type": "string", "example": "anna2.test@example.com" }
+                        "accessToken": { "type": "string", "example": "jwt-token" }
                       }
                     }
                   }
@@ -502,4 +500,3 @@
     }
   }
 }
-
