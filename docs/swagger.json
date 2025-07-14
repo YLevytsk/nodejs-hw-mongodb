@@ -7,7 +7,7 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "This API provides CRUD operations for managing contacts and supports user registration and login. \nUsers can create, view, update, and delete their contacts after authentication. The API uses JWT for authentication.\n"
+    "description": "This API provides CRUD operations for managing contacts and supports user registration and login. Users can create, view, update, and delete their contacts after authentication. The API uses JWT for authentication."
   },
   "servers": [
     {
@@ -133,8 +133,23 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/ContactInput" }
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "example": "Anna Klmith" },
+                  "phoneNumber": { "type": "string", "example": "+380991112234" },
+                  "email": { "type": "string", "example": "anna.klmith@work.com" },
+                  "isFavourite": { "type": "boolean", "example": false },
+                  "contactType": { "type": "string", "example": "work" },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Contact photo file"
+                  }
+                },
+                "required": ["name", "phoneNumber", "email", "contactType"]
+              }
             }
           }
         },
@@ -148,7 +163,21 @@
                   "properties": {
                     "status": { "type": "string", "example": "success" },
                     "code": { "type": "integer", "example": 201 },
-                    "data": { "$ref": "#/components/schemas/Contact" }
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": { "type": "string", "example": "6874ba9045cfdffbcb81324d" },
+                        "name": { "type": "string", "example": "Anna Klmith" },
+                        "phoneNumber": { "type": "string", "example": "+380991112234" },
+                        "email": { "type": "string", "example": "anna.klmith@work.com" },
+                        "isFavourite": { "type": "boolean", "example": false },
+                        "contactType": { "type": "string", "example": "work" },
+                        "userId": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
+                        "photo": { "type": ["string", "null"], "example": null },
+                        "createdAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" },
+                        "updatedAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" }
+                      }
+                    }
                   }
                 }
               }
@@ -251,8 +280,22 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/ContactInput" }
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "example": "Anna Klmith" },
+                  "phoneNumber": { "type": "string", "example": "+380991112234" },
+                  "email": { "type": "string", "example": "anna.klmith@work.com" },
+                  "isFavourite": { "type": "boolean", "example": false },
+                  "contactType": { "type": "string", "example": "work" },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Contact photo file"
+                  }
+                }
+              }
             }
           }
         },
@@ -266,7 +309,21 @@
                   "properties": {
                     "status": { "type": "string", "example": "success" },
                     "message": { "type": "string", "example": "Contact with id 68725a5e1785c8943512c751 updated successfully!" },
-                    "data": { "$ref": "#/components/schemas/Contact" }
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": { "type": "string", "example": "6874ba9045cfdffbcb81324d" },
+                        "name": { "type": "string", "example": "Anna Klmith" },
+                        "phoneNumber": { "type": "string", "example": "+380991112234" },
+                        "email": { "type": "string", "example": "anna.klmith@work.com" },
+                        "isFavourite": { "type": "boolean", "example": false },
+                        "contactType": { "type": "string", "example": "work" },
+                        "userId": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
+                        "photo": { "type": ["string", "null"], "example": null },
+                        "createdAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" },
+                        "updatedAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" }
+                      }
+                    }
                   }
                 }
               }
@@ -568,28 +625,17 @@
       "Contact": {
         "type": "object",
         "properties": {
-          "_id": { "type": "string", "example": "6873b7b1957d23253b9e6537" },
-          "name": { "type": "string", "example": "Anna Smith" },
-          "phoneNumber": { "type": "string", "example": "+380991112233" },
-          "email": { "type": "string", "example": "anna.smith@work.com" },
+          "_id": { "type": "string", "example": "6874ba9045cfdffbcb81324d" },
+          "name": { "type": "string", "example": "Anna Klmith" },
+          "phoneNumber": { "type": "string", "example": "+380991112234" },
+          "email": { "type": "string", "example": "anna.klmith@work.com" },
           "isFavourite": { "type": "boolean", "example": false },
           "contactType": { "type": "string", "example": "work" },
           "userId": { "type": "string", "example": "6873aebc8c71dc460b5d365e" },
           "photo": { "type": ["string", "null"], "example": null },
-          "createdAt": { "type": "string", "example": "2025-07-13T13:42:09.531Z" },
-          "updatedAt": { "type": "string", "example": "2025-07-13T13:42:09.531Z" }
+          "createdAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" },
+          "updatedAt": { "type": "string", "example": "2025-07-14T08:06:40.223Z" }
         }
-      },
-      "ContactInput": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string", "example": "Anna Smith" },
-          "phoneNumber": { "type": "string", "example": "+380991112233" },
-          "email": { "type": "string", "example": "anna.smith@work.com" },
-          "isFavourite": { "type": "boolean", "example": false },
-          "contactType": { "type": "string", "example": "work" }
-        },
-        "required": ["name", "phoneNumber", "email", "contactType"]
       },
       "NotFound": {
         "type": "object",
@@ -614,14 +660,6 @@
           "password": { "type": "string", "example": "secretPassword" }
         },
         "required": ["name", "email", "password"]
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "_id": { "type": "string", "example": "64cde2b1a3bbd14d9b2c5ad2" },
-          "email": { "type": "string", "example": "jane@mail.com" }
-        },
-        "required": ["_id", "email"]
       }
     }
   }
